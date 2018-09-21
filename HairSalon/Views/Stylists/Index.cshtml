@@ -1,0 +1,10 @@
+@{
+  Layout = "_Layout";
+}
+
+<div class="container">
+  @foreach (var stylist in Model)
+  {
+    @stylist.GetName();
+  }
+</div>
