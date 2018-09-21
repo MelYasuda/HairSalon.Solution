@@ -55,22 +55,72 @@ namespace HairSalon.Models
 
     public static void DeleteAll()
     {
-        MySqlConnection conn = DB.Connection();
-        conn.Open();
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
 
-        var cmd = conn.CreateCommand() as MySqlCommand;
-        cmd.CommandText = @"DELETE FROM stylists;";
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"DELETE FROM stylists;";
 
-        cmd.ExecuteNonQuery();
+      cmd.ExecuteNonQuery();
 
-        conn.Close();
-        if (conn != null)
-        {
-            conn.Dispose();
-        }
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+    }
+
+    public void Save()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"INSERT INTO categories (name) VALUES (@name);";
+
+      MySqlParameter name = new MySqlParameter();
+      name.ParameterName = "@name";
+      name.Value = this._name;
+      cmd.Parameters.Add(name);
+
+      cmd.ExecuteNonQuery();
+      _id = (int) cmd.LastInsertedId;
+
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
     }
 
 
+
+
+
+
+
+
+
+
+    public override bool Equals(System.Object otherStylist)
+    {
+      if (!(otherStylist is Stylist))
+      {
+        return false;
+      }
+      else
+      {
+        Stylist newStylist = (Stylist) otherStylist;
+        bool areIdsEqual = (this.GetId() == newStylist.GetId());
+        bool areNamesEqual = (this.GetName() == newStylist.GetName());
+        return (areIdsEqual && areNamesEqual);
+      }
+    }
+
+    public override int GetHashCode()
+    {
+      return this.GetId().GetHashCode();
+    }
 
   }
 

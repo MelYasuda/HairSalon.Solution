@@ -29,5 +29,15 @@ namespace HairSalon.Tests
              Stylist.DeleteAll();
            }
 
+           [TestMethod]
+           public void Equals_ReturnsTrueForSameName_Stylist()
+           {
+             //Arrange, Act
+             Stylist firstStylist = new Stylist("Mel", 1);
+             Stylist secondStylist = new Stylist("Mel", 1);
+
+             //Assert
+             Assert.AreEqual(firstStylist, secondStylist);
+           }
   }
 }
