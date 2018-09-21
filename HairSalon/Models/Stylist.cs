@@ -76,7 +76,7 @@ namespace HairSalon.Models
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"INSERT INTO categories (name) VALUES (@name);";
+      cmd.CommandText = @"INSERT INTO stylists (name) VALUES (@name);";
 
       MySqlParameter name = new MySqlParameter();
       name.ParameterName = "@name";
@@ -93,8 +93,71 @@ namespace HairSalon.Models
       }
     }
 
+    public static Stylist Find(int id)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM stylists WHERE id = (@searchId);";
+
+      MySqlParameter searchId = new MySqlParameter();
+      searchId.ParameterName = "@searchId";
+      searchId.Value = id;
+      cmd.Parameters.Add(searchId);
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      int StylistId = 0;
+      string StylistName = "";
+      while(rdr.Read())
+      {
+        StylistId = rdr.GetInt32(0);
+        StylistName = rdr.GetString(1);
+      }
+      Stylist foundStylist = new Stylist(StylistName, StylistId);
+
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return foundStylist;
+    }
 
 
+    public List<Client> GetClients()
+    {
+      List<Client> allClients = new List<Client> {};
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM clients WHERE stylist_id = @stylist_id;";
+
+      MySqlParameter newSlylistId = new MySqlParameter();
+      newSlylistId.ParameterName = "@stylist_id";
+      newSlylistId.Value = this.GetId();
+      cmd.Parameters.Add(newSlylistId);
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      int id = 0;
+      string name = "";
+      int stylist_id = 0;
+      while(rdr.Read())
+      {
+        id = rdr.GetInt32(0);
+        name = rdr.GetString(1);
+        stylist_id = rdr.GetInt32(2);
+        Client newClient = new Client(name, stylist_id, id);
+        allClients.Add(newClient);
+      }
+      conn.Close();
+      if(conn != null)
+      {
+        conn.Dispose();
+      }
+      return allClients;
+    }
 
 
 

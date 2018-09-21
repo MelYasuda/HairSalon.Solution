@@ -2,9 +2,12 @@
   Layout = "_Layout";
 }
 
+<h2>Here is the list of your stylists.</h2>
 <div class="container">
+<ul>
   @foreach (var stylist in Model)
   {
-    @stylist.GetName();
+    <li><a href="/stylists/@stylist.GetId()">@stylist.GetName()</a></li>
   }
+</ul>
 </div>

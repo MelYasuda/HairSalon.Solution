@@ -1,0 +1,15 @@
+@{
+  Layout = "_Layout";
+}
+
+<div class="container">
+<h2>@Model["stylist"].GetName()</h2>
+<ul>
+@foreach (var client in Model["clients"])
+{
+<li>@client.GetName()</li>
+}
+
+<a href = "/stylists/@Model["stylist"].GetId()/new">Add a client</a>
+</ul>
+</div>
