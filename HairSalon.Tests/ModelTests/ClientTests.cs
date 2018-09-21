@@ -6,21 +6,11 @@ using System;
 namespace HairSalon.Tests
 {
   [TestClass]
-  public class StylistTests : IDisposable
+  public class ClientTests : IDisposable
   {
-    public StylistTests()
+    public ClientTests()
     {
       DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=mel_yasuda_test;";
-    }
-
-    [TestMethod]
-    public void GetAll_StylistsEmptyAtFirst_0()
-    {
-      //Arrange, Act
-      int result = Stylist.GetAll().Count;
-
-      //Assert
-      Assert.AreEqual(0, result);
     }
 
     public void Dispose()
@@ -30,26 +20,28 @@ namespace HairSalon.Tests
     }
 
     [TestMethod]
-    public void Equals_ReturnsTrueForSameName_Stylist()
+    public void Equals_DifferentObjects_True()
     {
       //Arrange, Act
-      Stylist firstStylist = new Stylist("Mel", 1);
-      Stylist secondStylist = new Stylist("Mel", 1);
+      Client client1 = new Client("Mel", 1);
+      Client client2 = new Client("Mel", 1);
 
       //Assert
-      Assert.AreEqual(firstStylist, secondStylist);
+      Assert.AreEqual(client1, client2);
     }
 
     [TestMethod]
-    public void Save_SavesStylistToDatabase_StylistList()
+    public void Save_SaveClientToDatabase_ClientList()
     {
       //Arrange
       Stylist testStylist = new Stylist("Mel");
       testStylist.Save();
+      Client testClient = new Client("Doe", testStylist.GetId());
+      testClient.Save();
 
       //Act
-      List<Stylist> result = Stylist.GetAll();
-      List<Stylist> testList = new List<Stylist>{testStylist};
+      List<Client> result = testStylist.GetClients();
+      List<Client> testList = new List<Client>{testClient};
 
       //Assert
       CollectionAssert.AreEqual(testList, result);

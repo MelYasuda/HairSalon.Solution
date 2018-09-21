@@ -12,8 +12,5 @@ namespace HairSalon.Controllers
         Stylist foundStylist = Stylist.Find(id);
         return View(foundStylist);
       }
-
-
-
     }
 }

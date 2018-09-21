@@ -159,12 +159,6 @@ namespace HairSalon.Models
       return allClients;
     }
 
-
-
-
-
-
-
     public override bool Equals(System.Object otherStylist)
     {
       if (!(otherStylist is Stylist))

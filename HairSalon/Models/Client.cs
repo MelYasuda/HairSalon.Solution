@@ -61,43 +61,6 @@ namespace HairSalon.Models
         }
     }
 
-
-    public List<Client> GetClients()
-    {
-      List<Client> allClients = new List<Client> {};
-      MySqlConnection conn = DB.Connection();
-      conn.Open();
-
-      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"SELECT * FROM tasks WHERE stylist_id = @stylist_id;";
-
-      MySqlParameter newSlylistId = new MySqlParameter();
-      newSlylistId.ParameterName = "@stylist_id";
-      newSlylistId.Value = this.GetId();
-      cmd.Parameters.Add(newSlylistId);
-
-      var rdr = cmd.ExecuteReader() as MySqlDataReader;
-      int id = 0;
-      string name = "";
-      int stylist_id = 0;
-      while(rdr.Read())
-      {
-        id = rdr.GetInt32(0);
-        name = rdr.GetString(1);
-        stylist_id = rdr.GetInt32(3);
-        Client newClient = new Client(name, stylist_id, id);
-        allClients.Add(newClient);
-      }
-      conn.Close();
-      if(conn != null)
-      {
-        conn.Dispose();
-      }
-      return allClients;
-    }
-
-
-
     public override bool Equals(System.Object otherClient)
     {
         if (!(otherClient is Client))

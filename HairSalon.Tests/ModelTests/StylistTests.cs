@@ -14,7 +14,7 @@ namespace HairSalon.Tests
     }
 
     [TestMethod]
-    public void GetAll_StylistsEmptyAtFirst_0()
+    public void GetAll_NumberOfStylists_0()
     {
       //Arrange, Act
       int result = Stylist.GetAll().Count;
@@ -30,18 +30,18 @@ namespace HairSalon.Tests
     }
 
     [TestMethod]
-    public void Equals_ReturnsTrueForSameName_Stylist()
+    public void Equals_DifferentObjects_True()
     {
       //Arrange, Act
-      Stylist firstStylist = new Stylist("Mel", 1);
-      Stylist secondStylist = new Stylist("Mel", 1);
+      Stylist stylist1 = new Stylist("Mel", 1);
+      Stylist stylist2 = new Stylist("Mel", 1);
 
       //Assert
-      Assert.AreEqual(firstStylist, secondStylist);
+      Assert.AreEqual(stylist1, stylist2);
     }
 
     [TestMethod]
-    public void Save_SavesStylistToDatabase_StylistList()
+    public void Save_SaveStylist_List()
     {
       //Arrange
       Stylist testStylist = new Stylist("Mel");
@@ -54,5 +54,39 @@ namespace HairSalon.Tests
       //Assert
       CollectionAssert.AreEqual(testList, result);
     }
+
+    [TestMethod]
+    public void Find_FindStylist_FoundStylist()
+    {
+      //Arrange
+      Stylist stylist1 = new Stylist("Mel");
+      stylist1.Save();
+
+      //Act
+      Stylist foundStylist = Stylist.Find(stylist1.GetId()); //why just 0 doens't work?
+
+      //Assert
+      Assert.AreEqual(stylist1, foundStylist);
+    }
+
+    [TestMethod]
+    public void GetClients_FindClientsByStylistId_FoundClientsList()
+    {
+      //Arrange
+      Stylist testStylist = new Stylist("Mel");
+      testStylist.Save();
+
+      Client client1 = new Client("AJ", testStylist.GetId());
+      client1.Save();
+      Client client2 = new Client("Chan", testStylist.GetId());
+      client2.Save();
+
+      List<Client> testClientList = new List<Client> {client1, client2};
+      List<Client> resultClientsList = testStylist.GetClients();
+
+      CollectionAssert.AreEqual(testClientList, resultClientsList);
+    }
+
+
   }
 }
