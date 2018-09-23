@@ -50,26 +50,21 @@ namespace HairSalon.Controllers
         model.Add("clients", stylistClients);
         model.Add("stylist", foundStylist);
         return View("Details", model);
-        {
-        }
       }
 
+      [HttpGet("/stylists/{id}/update")]
+        public ActionResult UpdateForm(int id)
+        {
+          Stylist foundStylist = Stylist.Find(id);
+          return View(foundStylist);
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      [HttpPost("/stylists/{id}/update")]
+        public ActionResult Update(int id, string editName)
+        {
+          Stylist foundStylist = Stylist.Find(id);
+          foundStylist.Edit(editName);
+          return RedirectToAction("Index");
+        }
     }
 }

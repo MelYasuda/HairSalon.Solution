@@ -1,0 +1,14 @@
+@{
+  Layout = "_Layout";
+}
+
+<div class='container'>
+  <h2>Update the stylist</h2>
+  <form action="/stylists/@Model.GetId()/update" method="post">
+    <label for="editName">Stylist Name</label>
+    <input id="editName" name="editName" type="text" value="@Model.GetName()">
+    <button type="submit" class='btn'>Update</button>
+  </form>
+  <a href='/stylists'><button class='btn'>View Stylists</button></a>
+  <a href='/'><button class='btn btn'>Back Home</button></a>
+</div>
