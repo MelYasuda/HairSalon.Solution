@@ -178,5 +178,26 @@ namespace HairSalon.Models
       }
       return stylists;
     }
+
+    public override bool Equals(System.Object otherSpeciality)
+    {
+      if (!(otherSpeciality is Speciality))
+      {
+        return false;
+      }
+      else
+      {
+        Speciality newSpeciality = (Speciality) otherSpeciality;
+        bool areIdsEqual = (this.GetId() == newSpeciality.GetId());
+        bool areNamesEqual = (this.GetDescription() == newSpeciality.GetDescription());
+        return (areIdsEqual && areNamesEqual);
+      }
+    }
+
+    public override int GetHashCode()
+    {
+      return this.GetId().GetHashCode();
+    }
+
   }
 }
