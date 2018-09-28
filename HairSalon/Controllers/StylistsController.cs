@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using HairSalon.Models;
+using System;
 
 namespace HairSalon.Controllers
 {
@@ -33,9 +34,16 @@ namespace HairSalon.Controllers
       {
         Stylist foundStylist = Stylist.Find(id);
         List<Client> stylistClients = foundStylist.GetClients();
+
         Dictionary<string, object> model = new Dictionary<string, object>();
         model.Add("stylist", foundStylist);
         model.Add("clients", stylistClients);
+
+        List<Speciality> stylistSpecialities = foundStylist.GetSpecialities();
+        List<Speciality> allSpecialities = Speciality.GetAll();
+        model.Add("stylistSpecialities", stylistSpecialities);
+        model.Add("allSpecialities", allSpecialities);
+
         return View(model);
       }
 
@@ -75,6 +83,14 @@ namespace HairSalon.Controllers
           return RedirectToAction("Index");
         }
 
+        [HttpPost("/stylists/{stylistId}/specialities/new")]
+        public ActionResult AddSpecialities(int stylistId)
+        {
+          Stylist stylist = Stylist.Find(stylistId);
+          Speciality specialities = Speciality.Find(Int32.Parse(Request.Form["speciality-id"]));
+          stylist.AddSpecialities(specialities);
+          return RedirectToAction("Index");
+        }
 
     }
 }

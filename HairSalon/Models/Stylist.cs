@@ -187,6 +187,63 @@ namespace HairSalon.Models
       }
     }
 
+    public void AddSpecialities(Speciality newSpeciality)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"INSERT INTO stylists_specialities (stylist_id, speciality_id) VALUES (@StylistId, @SpecialityId);";
+
+      MySqlParameter stylist_id = new MySqlParameter();
+      stylist_id.ParameterName = "@StylistId";
+      stylist_id.Value = _id;
+      cmd.Parameters.Add(stylist_id);
+
+      MySqlParameter speciality_id = new MySqlParameter();
+      speciality_id.ParameterName = "@SpecialityId";
+      speciality_id.Value = newSpeciality.GetId();
+      cmd.Parameters.Add(speciality_id);
+
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+    }
+
+    public List<Speciality> GetSpecialities()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT specialities.* FROM stylists
+      JOIN stylists_specialities ON (stylists.id = stylists_specialities.stylist_id)
+      JOIN specialities ON (stylists_specialities.speciality_id = specialities.id)
+      WHERE stylists.id = @StylistId;";
+
+      MySqlParameter stylistIdParameter = new MySqlParameter();
+      stylistIdParameter.ParameterName = "@StylistId";
+      stylistIdParameter.Value = _id;
+      cmd.Parameters.Add(stylistIdParameter);
+
+      MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+      List<Speciality> specialities = new List<Speciality>{};
+
+      while(rdr.Read())
+      {
+        int specialityId = rdr.GetInt32(0);
+        string specialityDescription = rdr.GetString(1);
+        Speciality newSpeciality = new Speciality(specialityDescription, specialityId);
+        specialities.Add(newSpeciality);
+      }
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return specialities;
+    }
 
     public override bool Equals(System.Object otherStylist)
     {
