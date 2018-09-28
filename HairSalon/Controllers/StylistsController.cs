@@ -57,7 +57,7 @@ namespace HairSalon.Controllers
         List<Client> stylistClients = foundStylist.GetClients();
         model.Add("clients", stylistClients);
         model.Add("stylist", foundStylist);
-        return View("Details", model);
+        return RedirectToAction("Details", new { id = stylistId });
       }
 
       [HttpGet("/stylists/{id}/update")]
