@@ -61,6 +61,88 @@ namespace HairSalon.Models
         }
     }
 
+    public static List<Client> GetAll()
+    {
+      List<Client> allClients = new List<Client> {};
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM clients;";
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      while(rdr.Read())
+      {
+        int clientId = rdr.GetInt32(0);
+        string clientName = rdr.GetString(1);
+        int stylistId = rdr.GetInt32(2);
+        Client newClient = new Client(clientName, stylistId, clientId);
+        allClients.Add(newClient);
+      }
+
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return allClients;
+    }
+
+    public void Delete()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"DELETE FROM clients WHERE id = @clientId;";
+
+      MySqlParameter clientId = new MySqlParameter();
+      clientId.ParameterName = "@clientId";
+      clientId.Value = this.GetId();
+      cmd.Parameters.Add(clientId);
+
+      cmd.ExecuteNonQuery();
+
+      conn.Close();
+      if (conn != null)
+      {
+          conn.Dispose();
+      }
+    }
+
+    public static Client Find(int id)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM clients WHERE id = (@searchId);";
+
+      MySqlParameter searchId = new MySqlParameter();
+      searchId.ParameterName = "@searchId";
+      searchId.Value = id;
+      cmd.Parameters.Add(searchId);
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      int ClientId = 0;
+      string ClientName = "";
+      int StylistId = 0;
+      while(rdr.Read())
+      {
+        ClientId = rdr.GetInt32(0);
+        ClientName = rdr.GetString(1);
+        StylistId = rdr.GetInt32(2);
+      }
+      Client foundClient = new Client(ClientName, StylistId, ClientId);
+
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return foundClient;
+    }
+
     public override bool Equals(System.Object otherClient)
     {
         if (!(otherClient is Client))

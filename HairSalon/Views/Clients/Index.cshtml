@@ -1,0 +1,15 @@
+@{
+  Layout = "_Layout";
+}
+
+<h2>Here is the list of your clients.</h2>
+<div class="container">
+<ul>
+  @foreach (var client in Model)
+  {
+    <li>@client.GetName()</li>
+  }
+
+  <a href='/clients/delete'><button class='btn btn'>Delete All Clients</button></a>
+</ul>
+</div>
