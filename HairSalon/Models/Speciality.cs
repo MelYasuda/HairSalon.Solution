@@ -118,9 +118,10 @@ namespace HairSalon.Models
       {
         conn.Dispose();
       }
+      return newSpeciality;
     }
 
-    public void AddStylists(Speciality newStylist)
+    public void AddStylists(Stylist newStylist)
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
@@ -152,7 +153,7 @@ namespace HairSalon.Models
       MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
       cmd.CommandText = @"SELECT stylists.* FROM specialities
       JOIN stylists_specialities ON (specialities.id = stylists_specialities.speciality_id)
-      JOIN stylists ON (students_courses.stylist_id = stylists.id)
+      JOIN stylists ON (stylists_specialities.stylist_id = stylists.id)
       WHERE specialities.id = @SpecialityId;";
 
       MySqlParameter specialityIdParameter = new MySqlParameter();

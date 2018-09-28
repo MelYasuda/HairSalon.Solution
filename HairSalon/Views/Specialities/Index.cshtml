@@ -7,8 +7,8 @@
 <ul>
   @foreach (var speciality in Model)
   {
-    <li><a href="/stylists/@speciality.GetId()">@speciality.GetDescription()</a></li>
-    <a href = "/stylists/@speciality.GetId()/update"><button class='btn btn'>Edit</button></a>
+    <li><a href="/specialities/@speciality.GetId()">@speciality.GetDescription()</a></li>
+    <a href = "/specialities/@speciality.GetId()/update"><button class='btn btn'>Edit</button></a>
   }
 </ul>
 
