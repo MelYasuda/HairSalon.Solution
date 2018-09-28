@@ -1,0 +1,14 @@
+@{
+  Layout = "_Layout";
+}
+
+<div class='container'>
+  <h2>Add a speciality</h2>
+  <form action="/specialities" method="post">
+    <label for="description">Speciality Description</label>
+    <input id="description" name="description" type="text">
+    <button type="submit" class='btn'>Add</button>
+  </form>
+  <a href='/specialities'><button class='btn'>View Specialities</button></a>
+  <a href='/'><button class='btn btn'>Back Home</button></a>
+</div>

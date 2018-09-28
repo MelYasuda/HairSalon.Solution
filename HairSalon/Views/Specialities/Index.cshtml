@@ -1,0 +1,16 @@
+@{
+  Layout = "_Layout";
+}
+
+<h2>Here is the list of your stylists' specialities.</h2>
+<div class="container">
+<ul>
+  @foreach (var speciality in Model)
+  {
+    <li><a href="/stylists/@speciality.GetId()">@speciality.GetDescription()</a></li>
+    <a href = "/stylists/@speciality.GetId()/update"><button class='btn btn'>Edit</button></a>
+  }
+</ul>
+
+<a href = "/specialities/new">Add a speciality</a>
+</div>
