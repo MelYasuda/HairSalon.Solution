@@ -5,7 +5,7 @@
 #### By _**Mel Yasuda**_
 
 ## Description
-It is an app for a hair salon. The owner should be able to add a list of the stylists, and for each stylist, add clients who see that stylist. The stylists work independently, so each client only belongs to a single stylist.
+It is an app for a hair salon. The owner should be able to add a list of the stylists, and for each stylist, add clients who see that stylist. The stylists work independently, so each client only belongs to a single stylist. Also, each stylist has many specialties and many stylists can have the same specialty. 
 
 ## Specification
 * The program shows a list of all the stylists.
