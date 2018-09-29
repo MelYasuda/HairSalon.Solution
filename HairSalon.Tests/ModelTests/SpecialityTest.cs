@@ -71,9 +71,9 @@ namespace HairSalon.Tests
     }
 
 
-    
+
     [TestMethod]
-    public void AddSpecialities_AddsSpecialitiesToStylist_StylistList()
+    public void AddStylists_AddsStylistsToSpeciality_StylistList()
     {
         //Arrange
         Stylist testStylist = new Stylist("Mel");
@@ -83,53 +83,32 @@ namespace HairSalon.Tests
         testSpeciality.Save();
 
         //Act
-        testStylist.AddSpecialities(testSpeciality);
+        testSpeciality.AddStylists(testStylist);
 
-        List<Speciality> result = testStylist.GetSpecialities();
-        List<Speciality> testList = new List<Speciality>{testSpeciality};
+        List<Stylist> result = testSpeciality.GetStylists();
+        List<Stylist> testList = new List<Stylist>{testStylist};
 
         //Assert
         CollectionAssert.AreEqual(testList, result);
     }
 
-    // [TestMethod]
-    // public void GetSpecialities_ReturnsAllStylistSpecialities_SpecialityList()
-    // {
-    //     //Arrange
-    //     Stylist testStylist = new Stylist("Mel");
-    //     testStylist.Save();
-    //
-    //     Speciality testSpeciality = new Speciality("Cut");
-    //     testSpeciality.Save();
-    //
-    //     //Act
-    //     testStylist.AddSpecialities(testSpeciality);
-    //     List<Speciality> result = testStylist.GetSpecialities();
-    //     List<Speciality> testList = new List<Speciality> {testSpeciality};
-    //
-    //     //Assert
-    //     CollectionAssert.AreEqual(testList, result);
-    // }
-    //
-    // [TestMethod]
-    // public void Delete_DeletesStylistAssociationsFromDatabase_StylistList()
-    // {
-    //     //Arrange
-    //     Speciality testSpeciality = new Speciality("Cut");
-    //     testSpeciality.Save();
-    //
-    //     Stylist testStylist = new Stylist("Mel");
-    //     testStylist.Save();
-    //
-    //     //Act
-    //     testStylist.AddSpecialities(testSpeciality);
-    //     testStylist.Delete();
-    //
-    //     List<Stylist> resultStylist = testSpeciality.GetStylists();
-    //     List<Stylist> testStylist2 = new List<Stylist> {};
-    //
-    //     //Assert
-    //     CollectionAssert.AreEqual(testStylist2, resultStylist);
-    // }
+    [TestMethod]
+    public void GetStylists_ReturnsAllSpecialityStylists_StylistList()
+    {
+        //Arrange
+        Stylist testStylist = new Stylist("Mel");
+        testStylist.Save();
+
+        Speciality testSpeciality = new Speciality("Cut");
+        testSpeciality.Save();
+
+        //Act
+        testSpeciality.AddStylists(testStylist);
+        List<Stylist> result = testSpeciality.GetStylists();
+        List<Stylist> testList = new List<Stylist> {testStylist};
+
+        //Assert
+        CollectionAssert.AreEqual(testList, result);
+    }
   }
 }

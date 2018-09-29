@@ -104,7 +104,7 @@ namespace HairSalon.Tests
 
 
     [TestMethod]
-    public void AddSpecialities_AddsSpecialitiesToStylist_StylistList()
+    public void AddSpecialities_AddsSpecialitiesToStylist_SpecialityList()
     {
         //Arrange
         Stylist testStylist = new Stylist("Mel");
