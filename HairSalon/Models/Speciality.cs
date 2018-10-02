@@ -108,9 +108,11 @@ namespace HairSalon.Models
       int specialityId = 0;
       string specialityDescription = "";
 
-      rdr.Read();
-      specialityId = rdr.GetInt32(0);
-      specialityDescription = rdr.GetString(1);
+      while(rdr.Read())
+      {
+        specialityId = rdr.GetInt32(0);
+        specialityDescription = rdr.GetString(1);        
+      }
 
       Speciality newSpeciality = new Speciality(specialityDescription, specialityId);
       conn.Close();

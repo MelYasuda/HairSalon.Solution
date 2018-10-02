@@ -7,13 +7,13 @@ using HairSalon.Models;
 namespace HairSalon.Tests
 {
   [TestClass]
-  public class ClientsControllerTest
+  public class StylistsControllerTest
   {
     [TestMethod]
     public void Index_ReturnsCorrectView_True()
     {
       //Arrange
-      ClientsController controller = new ClientsController();
+      StylistsController controller = new StylistsController();
 
       //Act
       ActionResult indexView = controller.Index();
@@ -26,10 +26,10 @@ namespace HairSalon.Tests
     public void CreateForm_ReturnsCorrectView_True()
     {
       //Arrange
-      ClientsController controller = new ClientsController();
+      StylistsController controller = new StylistsController();
 
       //Act
-      ActionResult indexView = controller.CreateForm(1);
+      ActionResult indexView = controller.CreateForm();
 
       //Assert
       Assert.IsInstanceOfType(indexView, typeof(ViewResult));
@@ -39,7 +39,7 @@ namespace HairSalon.Tests
     public void Details_ReturnsCorrectView_True()
     {
       //Arrange
-      ClientsController controller = new ClientsController();
+      StylistsController controller = new StylistsController();
 
       //Act
       ActionResult indexView = controller.Details(1);
@@ -49,13 +49,13 @@ namespace HairSalon.Tests
     }
 
     [TestMethod]
-    public void DeleteAllClient_ReturnsCorrectView_True()
+    public void DeleteAll_ReturnsCorrectView_True()
     {
       //Arrange
-      ClientsController controller = new ClientsController();
+      StylistsController controller = new StylistsController();
 
       //Act
-      ActionResult indexView = controller.DeleteAllClient();
+      ActionResult indexView = controller.DeleteAll();
 
       //Assert
       Assert.IsInstanceOfType(indexView, typeof(RedirectToActionResult));
@@ -65,13 +65,39 @@ namespace HairSalon.Tests
     public void UpdateForm_ReturnsCorrectView_True()
     {
       //Arrange
-      ClientsController controller = new ClientsController();
+      StylistsController controller = new StylistsController();
 
       //Act
       ActionResult indexView = controller.UpdateForm(1);
 
       //Assert
       Assert.IsInstanceOfType(indexView, typeof(ViewResult));
+    }
+
+    [TestMethod]
+    public void DeleteStylist_ReturnsCorrectView_True()
+    {
+      //Arrange
+      StylistsController controller = new StylistsController();
+
+      //Act
+      ActionResult indexView = controller.DeleteStylist(1);
+
+      //Assert
+      Assert.IsInstanceOfType(indexView, typeof(RedirectToActionResult));
+    }
+
+    [TestMethod]
+    public void DeleteClient_ReturnsCorrectView_True()
+    {
+      //Arrange
+      StylistsController controller = new StylistsController();
+
+      //Act
+      ActionResult indexView = controller.DeleteClient(1);
+
+      //Assert
+      Assert.IsInstanceOfType(indexView, typeof(RedirectToActionResult));
     }
   }
 }

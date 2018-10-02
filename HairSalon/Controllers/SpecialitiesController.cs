@@ -5,7 +5,7 @@ using System;
 
 namespace HairSalon.Controllers
 {
-  public class specialitiesController : Controller
+  public class SpecialitiesController : Controller
   {
     [HttpGet("specialities")]
     public ActionResult Index()
